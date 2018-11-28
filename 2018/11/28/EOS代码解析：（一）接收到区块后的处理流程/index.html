@@ -5,19 +5,20 @@
   
 
   
-  <title>shuizhongmose&#39;s blog</title>
+  <title>EOS代码解析：（一）接收到区块后的处理流程 | shuizhongmose&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="知识的积累在于总结，希望自己能成为女儿的偶像">
-<meta name="keywords" content="搬砖、生活体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="shuizhongmose&#39;s blog">
-<meta property="og:url" content="https://shuizhongmose.github.io/index.html">
+  <meta name="description" content="导读  EOSIO中使用了chain和fork_db两个内存来存储链的信息：&amp;emsp;a. chain存储的是当前主链的信息；chain的声明：&amp;emsp;&amp;emsp;chain;```12&amp;lt;br/&amp;gt;&amp;amp;emsp;b. fork_db存储的是所有分叉数据，fork_db的声明：&amp;lt;br/&amp;gt;&amp;amp;emsp;&amp;amp;emsp;```fc::optional&amp;lt;">
+<meta name="keywords" content="EOS代码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EOS代码解析：（一）接收到区块后的处理流程">
+<meta property="og:url" content="https://shuizhongmose.github.io/2018/11/28/EOS代码解析：（一）接收到区块后的处理流程/index.html">
 <meta property="og:site_name" content="shuizhongmose&#39;s blog">
-<meta property="og:description" content="知识的积累在于总结，希望自己能成为女儿的偶像">
+<meta property="og:description" content="导读  EOSIO中使用了chain和fork_db两个内存来存储链的信息：&amp;emsp;a. chain存储的是当前主链的信息；chain的声明：&amp;emsp;&amp;emsp;chain;```12&amp;lt;br/&amp;gt;&amp;amp;emsp;b. fork_db存储的是所有分叉数据，fork_db的声明：&amp;lt;br/&amp;gt;&amp;amp;emsp;&amp;amp;emsp;```fc::optional&amp;lt;">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-28T14:50:49.419Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shuizhongmose&#39;s blog">
-<meta name="twitter:description" content="知识的积累在于总结，希望自己能成为女儿的偶像">
+<meta name="twitter:title" content="EOS代码解析：（一）接收到区块后的处理流程">
+<meta name="twitter:description" content="导读  EOSIO中使用了chain和fork_db两个内存来存储链的信息：&amp;emsp;a. chain存储的是当前主链的信息；chain的声明：&amp;emsp;&amp;emsp;chain;```12&amp;lt;br/&amp;gt;&amp;amp;emsp;b. fork_db存储的是所有分叉数据，fork_db的声明：&amp;lt;br/&amp;gt;&amp;amp;emsp;&amp;amp;emsp;```fc::optional&amp;lt;">
   
     <link rel="alternate" href="/atom.xml" title="shuizhongmose&#39;s blog" type="application/atom+xml">
   
@@ -68,9 +69,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-EOS代码解析：（一）接收到区块后的处理流程" class="article article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-EOS代码解析：（一）接收到区块后的处理流程" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/28/EOS代码解析：（一）接收到区块后的处理流程/" class="article-date">
   <time datetime="2018-11-28T14:50:22.000Z" itemprop="datePublished">2018-11-28</time>
@@ -83,8 +82,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/28/EOS代码解析：（一）接收到区块后的处理流程/">EOS代码解析：（一）接收到区块后的处理流程</a>
+    <h1 class="article-title" itemprop="name">
+      EOS代码解析：（一）接收到区块后的处理流程
     </h1>
   
 
@@ -209,108 +208,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-认识数字货币" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/28/认识数字货币/" class="article-date">
-  <time datetime="2018-11-28T14:43:25.000Z" itemprop="datePublished">2018-11-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/28/认识数字货币/">认识数字货币</a>
-    </h1>
+    <a href="/2018/11/28/认识数字货币/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">认识数字货币</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="数字货币历史重要事件"><a href="#数字货币历史重要事件" class="headerlink" title="数字货币历史重要事件"></a>数字货币历史重要事件</h1><table>
-<thead>
-<tr>
-<th>年份</th>
-<th>公司（项目）名称</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1989</td>
-<td>数字现金公司</td>
-<td>电子现金、网络资金（付款人匿名，商家不匿名）</td>
-</tr>
-<tr>
-<td>1994</td>
-<td>第一虚拟公司</td>
-<td>支付中介</td>
-</tr>
-<tr>
-<td>1994</td>
-<td>网络现金</td>
-<td>使用安全电子交易协议（SET）体系（本地加密程序）</td>
-</tr>
-<tr>
-<td> -</td>
-<td>电子黄金</td>
-<td>黄金锚定电子货币</td>
-</tr>
-<tr>
-<td> -</td>
-<td>数字黄金</td>
-<td>部分黄金储备，不完全依赖</td>
-</tr>
-<tr>
-<td>1997</td>
-<td>哈希现金</td>
-<td>使用哈希方程解决数字货币的价值问题（成本是解决单个题目的简单叠加）</td>
-</tr>
-<tr>
-<td>1998</td>
-<td>B币</td>
-<td>点对点网络，每个节点维护数据库，但是节点并不是账本，解算数学题创造币</td>
-</tr>
-<tr>
-<td>1998</td>
-<td>比特黄金</td>
-<td>与B币类似</td>
-</tr>
-<tr>
-<td>2016年</td>
-<td>比特币</td>
-<td>用户-用户交易，POW（哈希现金的改进、升级版）锚定数字货币价值</td>
-</tr>
-</tbody>
-</table>
-<h1 id="数字货币存活的条件"><a href="#数字货币存活的条件" class="headerlink" title="数字货币存活的条件"></a>数字货币存活的条件</h1><h2 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h2><p>用户在交易过程中不希望将自己的信息和交易历史暴露给其他人，现实生活中的现金就具有这一特性，所以能一直保留下来。</p>
-<h2 id="易用性"><a href="#易用性" class="headerlink" title="易用性"></a>易用性</h2><p>如果想实现真正意义的“货币”，数字货币必须具有易用性。如果用户使用该货币用于支付，需要许多步骤和长时间等待，则该数字货币不具有实用性。</p>
-<h2 id="价值"><a href="#价值" class="headerlink" title="价值"></a>价值</h2><p>任何货币本身必须含有与其等额的价值。<br>现阶段流通的纸币，因为有国家信用做背书，所以纸币的价值一定程度是国家信用等级的体现。<br>数字货币作为货币的属性，它必须有一种自由浮动并且具有真实价值的稀缺性东西，比如黄金、钻石。电子黄金、数字黄金就锚定、或一定程度锚定了黄金。B币、比特黄金、比特币等使用数学计算来实现该稀缺性。在比特币中解决数学难题的过程就被叫做挖矿。</p>
-<h2 id="流通性"><a href="#流通性" class="headerlink" title="流通性"></a>流通性</h2><h1 id="比特币与其它相似项目对比"><a href="#比特币与其它相似项目对比" class="headerlink" title="比特币与其它相似项目对比"></a>比特币与其它相似项目对比</h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shuizhongmose.github.io/2018/11/28/认识数字货币/" data-id="cjp1ag4po0001h0ubbqmsrx7g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
